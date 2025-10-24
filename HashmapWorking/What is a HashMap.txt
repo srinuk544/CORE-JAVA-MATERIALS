@@ -1,0 +1,121 @@
+What is a HashMap?
+
+A HashMap in Java is a data structure that stores data in the form of key–value pairs.
+It allows you to store, retrieve, and remove values based on a unique key — very quickly.
+
+It is present in the package java.util and implements the Map interface.
+
+🧠 Basic Idea
+
+Each key is unique.
+
+Each key is mapped to exactly one value.
+
+You can access the value by giving the key — just like a dictionary or a locker system:
+
+Key = locker number
+
+Value = item inside locker
+
+🧩 Internal Working of HashMap
+
+Internally, HashMap uses a combination of an array + linked lists (and sometimes trees) to store data efficiently.
+
+Let’s go step-by-step:
+
+🔹 1. Hashing
+
+When you store a key in a HashMap, Java first applies a hashing function on the key to generate a hash code (an integer number).
+
+Then, this hash code is used to decide which bucket (index) in the internal array the key–value pair should go into.
+
+So every key is placed into a “bucket” based on its hash code.
+
+🔹 2. Buckets
+
+A bucket is simply one position in the internal array.
+Each bucket can store one or more entries (key–value pairs).
+
+Initially, the HashMap creates 16 buckets (this is the default capacity).
+
+🔹 3. Collision
+
+Sometimes, two different keys can generate the same hash code or fall into the same bucket index.
+This situation is called a collision.
+
+When a collision happens, HashMap stores both entries in the same bucket using a linked list structure.
+
+🔹 4. From Linked List to Tree (Java 8 and above)
+
+If too many keys end up in the same bucket (8 or more),
+HashMap converts that bucket’s linked list into a Red–Black Tree for faster searching.
+
+This change improves performance from O(n) (linear search) to O(log n) (tree search).
+
+🔹 5. Retrieving a Value (get method)
+
+When you call map.get(key):
+
+HashMap calculates the hash code of the key.
+
+Finds the bucket index.
+
+Goes to that bucket and checks all entries.
+
+Compares the actual key using the equals() method.
+
+Returns the corresponding value.
+
+This makes searching very fast — on average O(1) time.
+
+🔹 6. Load Factor and Resizing
+
+Load factor = how full the HashMap is allowed to get before it increases in size.
+
+Default load factor = 0.75 (75%).
+
+When the number of stored entries exceeds 75% of total capacity,
+HashMap automatically doubles its size and rehashes all keys (recomputes their bucket positions).
+This process is called rehashing.
+
+🔹 7. Null Keys and Values
+
+HashMap allows one null key and multiple null values.
+
+The null key is always stored in the first bucket (index 0).
+
+🔹 8. Thread Safety
+
+HashMap is not thread-safe.
+If multiple threads modify a HashMap at the same time, it may lead to data inconsistency.
+To make it thread-safe, we use ConcurrentHashMap.
+
+⚡ Advantages of HashMap
+
+✅ Very fast lookup and insertion (O(1) average).
+✅ Can store any type of objects as key/value.
+✅ Allows one null key and multiple null values.
+✅ Automatically grows when full (resizing).
+
+⚠️ Disadvantages
+
+❌ Not synchronized (not thread-safe).
+❌ Order of elements is not guaranteed — HashMap does not maintain insertion order.
+(If you want order, use LinkedHashMap.)
+❌ Requires proper implementation of hashCode() and equals() methods for custom keys.
+
+🌱 Summary Table
+Concept	Description
+Data structure	Array + LinkedList/Tree
+Default capacity	16
+Load factor	0.75
+Collision handling	Linked list / Tree
+Allows null key/value	Yes
+Thread-safe	No
+Order maintained	No
+🧾 In short:
+
+A HashMap stores data in key–value pairs.
+Internally, it uses hashing to determine where each entry goes in an array.
+When two keys map to the same location, it uses chaining (linked list or tree) to store them.
+It automatically resizes when it becomes too full.
